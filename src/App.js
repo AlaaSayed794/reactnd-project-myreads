@@ -19,10 +19,11 @@ class BooksApp extends React.Component {
     this.populateData()
   }
   moveBook = async (id, shelf) => {
-    console.log("moving")
-    console.log(id)
+
+    this.setState({ loading: true })
     await BooksAPI.update(id, shelf).then(res => {
       this.setState({
+        loading: false,
         books: this.state.books.map(book => {
           if (book.id === id) {
             book.shelf = shelf
@@ -34,15 +35,14 @@ class BooksApp extends React.Component {
   }
 
   render() {
-    console.log(this.state.books)
     return (
       <LoadingOverlay
         active={this.state.loading}
         spinner
-        text='Loading your books...'
+        text='Loading...'
       >
         <div><Route path='/search' render={() => (
-          <Search />
+          <Search moveBook={this.moveBook} books={this.state.books} />
         )} />
           <Route exact path='/' render={() => ((
             <Books books={this.state.books} moveBook={this.moveBook} />

@@ -64,7 +64,10 @@ body, .app {
   font-size: 0;
   outline: 0;
 }
-
+.showing-books {
+  text-align: center;
+  margin: 20px 0;
+}
 .open-search :hover {
   background-color: rgb(0, 102, 0);
 }

@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function book(props) {
     const onChange = (e) => {
-        if (e.target.value != "move") {
+        if (e.target.value !== "move") {
             props.moveBook(props.book.id, e.target.value)
         }
     }
