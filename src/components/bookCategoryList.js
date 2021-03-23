@@ -1,5 +1,6 @@
 import React from 'react'
 import Book from './book'
+import PropTypes from 'prop-types';
 export default function bookCategory(props) {
     return (
         props.books.filter(book => {
@@ -11,4 +12,9 @@ export default function bookCategory(props) {
         })
 
     )
+}
+bookCategory.propTypes = {
+    books: PropTypes.array.isRequired
+    , moveBook: PropTypes.func.isRequired,
+    filter: PropTypes.string.isRequired
 }

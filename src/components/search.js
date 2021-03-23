@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Book from './book'
+import PropTypes from 'prop-types';
 
 
 class search extends Component {
@@ -62,3 +63,8 @@ class search extends Component {
 }
 
 export default search;
+
+search.propTypes = {
+    books: PropTypes.array.isRequired
+    , moveBook: PropTypes.func.isRequired
+}

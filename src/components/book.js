@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 
 export default function book(props) {
     const onChange = (e) => {
@@ -27,4 +28,9 @@ export default function book(props) {
             </div>
         </li>
     )
+}
+
+book.propTypes = {
+    book: PropTypes.object.isRequired
+    , moveBook: PropTypes.func.isRequired
 }

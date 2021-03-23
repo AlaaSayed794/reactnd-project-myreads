@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Category from './bookCategoryList'
 export default function books(props) {
@@ -40,4 +41,8 @@ export default function books(props) {
             </div>
         </div>
     )
+}
+books.propTypes = {
+    books: PropTypes.array.isRequired
+    , moveBook: PropTypes.func.isRequired
 }
