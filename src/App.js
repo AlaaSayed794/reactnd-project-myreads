@@ -1,25 +1,50 @@
 import React from 'react'
 import { Route } from 'react-router-dom';
+import LoadingOverlay from 'react-loading-overlay';
 import * as BooksAPI from './BooksAPI'
 import Books from './components/books'
 import Search from './components/search'
 import './App.css'
 
 class BooksApp extends React.Component {
-  state = {
-    books: [],
-    categories: []
+  constructor(props) {
+    super(props)
+    this.state = {
+      books: [],
+      categories: [],
+      loading: true
+    }
+  }
+  componentDidMount() {
+    this.populateData()
   }
 
   render() {
+    console.log(this.state.books)
     return (
-      <div><Route path='/search' render={() => (
-        <Search />
-      )} />
-        <Route exact path='/' render={() => ((
-          <Books />
-        ))} /></div>
+      <LoadingOverlay
+        active={this.state.loading}
+        spinner
+        text='Loading your books...'
+      >
+        <div><Route path='/search' render={() => (
+          <Search />
+        )} />
+          <Route exact path='/' render={() => ((
+            <Books />
+          ))} /></div>
+
+      </LoadingOverlay>
+
     )
+  }
+
+  async populateData() {
+
+    const books = await BooksAPI.getAll();
+
+    this.setState({ books, loading: false })
+
   }
 }
 
