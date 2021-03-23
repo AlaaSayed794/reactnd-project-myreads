@@ -25,8 +25,7 @@ class search extends Component {
                 //filter by name or author 
                 b.title.toLowerCase().includes(query.toLowerCase()) || b.authors.toString().toLowerCase().includes(query.toLowerCase())
             ))
-        console.log(books.length)
-        console.log(showingBooks.length)
+
         return (
 
             <div className="search-books">
@@ -39,21 +38,24 @@ class search extends Component {
 
                     </div>
                 </div>
-                {showingBooks.length !== books.length && (
+                {query && (
                     <div className="search-books-results">
-                        <span>Now showing {showingBooks.length} of {books.length}</span>
-                        <button onClick={this.clearQuery}>Show all</button>
+                        <span>Found {showingBooks.length} results out of {books.length}</span>
+                        <button onClick={this.clearQuery}>Clear Search</button>
                     </div>
                 )}
-                <div className="search-books-results">
-                    <ol className="books-grid">{
-                        showingBooks.map(book => (<Book moveBook={this.props.moveBook} key={book.id} book={book} />)
 
-                        )
-                    }
+                {(query) && (
+                    <div className="search-books-results">
+                        <ol className="books-grid">{
+                            showingBooks.map(book => (<Book moveBook={this.props.moveBook} key={book.id} book={book} />)
+                            )
+                        }
 
-                    </ol>
-                </div>
+                        </ol>
+                    </div>
+                )}
+
             </div>
         )
     }
