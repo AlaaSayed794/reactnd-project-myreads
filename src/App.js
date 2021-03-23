@@ -31,7 +31,7 @@ class BooksApp extends React.Component {
           <Search />
         )} />
           <Route exact path='/' render={() => ((
-            <Books />
+            <Books books={this.state.books} />
           ))} /></div>
 
       </LoadingOverlay>
