@@ -13,7 +13,7 @@ export default function books(props) {
                         <h2 className="bookshelf-title">Currently Reading</h2>
                         <div className="bookshelf-books">
                             <ol className="books-grid">
-                                <Category filter="currentlyReading" books={props.books} />
+                                <Category moveBook={props.moveBook} filter="currentlyReading" books={props.books} />
                             </ol>
                         </div>
                     </div>
@@ -21,7 +21,7 @@ export default function books(props) {
                         <h2 className="bookshelf-title">Want to Read</h2>
                         <div className="bookshelf-books">
                             <ol className="books-grid">
-                                <Category filter="wantToRead" books={props.books} />
+                                <Category moveBook={props.moveBook} filter="wantToRead" books={props.books} />
                             </ol>
                         </div>
                     </div>
@@ -29,7 +29,7 @@ export default function books(props) {
                         <h2 className="bookshelf-title">Read</h2>
                         <div className="bookshelf-books">
                             <ol className="books-grid">
-                                <Category filter="read" books={props.books} />
+                                <Category moveBook={props.moveBook} filter="read" books={props.books} />
                             </ol>
                         </div>
                     </div>

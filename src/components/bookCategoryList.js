@@ -6,7 +6,7 @@ export default function bookCategory(props) {
             return (book.shelf === props.filter)
         }).map(book => {
             return (
-                <Book key={book.id} book={book} />
+                <Book moveBook={props.moveBook} key={book.id} book={book} />
             )
         })
 

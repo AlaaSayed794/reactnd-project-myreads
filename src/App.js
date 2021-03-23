@@ -18,6 +18,20 @@ class BooksApp extends React.Component {
   componentDidMount() {
     this.populateData()
   }
+  moveBook = async (id, shelf) => {
+    console.log("moving")
+    console.log(id)
+    await BooksAPI.update(id, shelf).then(res => {
+      this.setState({
+        books: this.state.books.map(book => {
+          if (book.id === id) {
+            book.shelf = shelf
+          }
+          return book;
+        })
+      })
+    })
+  }
 
   render() {
     console.log(this.state.books)
@@ -31,7 +45,7 @@ class BooksApp extends React.Component {
           <Search />
         )} />
           <Route exact path='/' render={() => ((
-            <Books books={this.state.books} />
+            <Books books={this.state.books} moveBook={this.moveBook} />
           ))} /></div>
 
       </LoadingOverlay>
