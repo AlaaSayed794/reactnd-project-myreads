@@ -4,10 +4,15 @@ import PropTypes from 'prop-types';
 export default function book(props) {
     const onChange = (e) => {
         if (e.target.value !== "move") {
-            props.moveBook(props.book.id, e.target.value)
+            props.moveBook(props.book, e.target.value)
         }
     }
-
+    let authors = ""
+    try {
+        authors = props.book.authors.join(",").replace(/(^,)|(,$)/g, "")
+    } catch {
+        authors = ""
+    }
     return (
         <li key={props.book.id}>
             <div className="book">
@@ -24,7 +29,7 @@ export default function book(props) {
                     </div>
                 </div>
                 <div className="book-title">{props.book.title}</div>
-                <div className="book-authors">{props.book.authors.join(",").replace(/(^,)|(,$)/g, "")}</div>
+                <div className="book-authors">{authors}</div>
             </div>
         </li>
     )

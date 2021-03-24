@@ -2,31 +2,29 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Book from './book'
 import PropTypes from 'prop-types';
-
+import * as BooksAPI from '../BooksAPI'
 
 class search extends Component {
     state = {
-        query: ''
+        showingBooks: []
     }
-    updateQuery = (query) => {
-        this.setState(() => ({
-            query: query.trim()
-        }))
-    }
-    clearQuery = () => {
-        this.updateQuery('')
+    searchBooks = async (query) => {
+        if (query) {
+            const books = await BooksAPI.search(query)
+            this.setState(() => ({
+                showingBooks: books && (!books.error) ? books : []
+            }))
+        }
+        //user cleared search query
+        else {
+            this.setState(() => ({
+                showingBooks: []
+            }))
+        }
+
     }
     render() {
-        const { query } = this.state
-        const { books } = this.props
-
-        const showingBooks = query === ''
-            ? books
-            : books.filter((b) => (
-                //filter by name or author 
-                b.title.toLowerCase().includes(query.toLowerCase()) || b.authors.toString().toLowerCase().includes(query.toLowerCase())
-            ))
-
+        const { showingBooks } = this.state
         return (
 
             <div className="search-books">
@@ -34,28 +32,19 @@ class search extends Component {
                     <Link className="close-search" to="/">Close</Link>
                     <div className="search-books-input-wrapper">
                         <input type="text" placeholder="Search by title or author"
-                            onChange={(event) => this.updateQuery(event.target.value)}
-                            value={query} />
+                            onChange={(event) => this.searchBooks(event.target.value)} />
 
                     </div>
                 </div>
-                {query && (
-                    <div className="search-books-results">
-                        <span>Found {showingBooks.length} results out of {books.length}</span>
-                        <button onClick={this.clearQuery}>Clear Search</button>
-                    </div>
-                )}
+                <div className="search-books-results">
+                    <ol className="books-grid">{
+                        showingBooks.map(book => (<Book moveBook={this.props.moveBook} key={book.id} book={book} />)
+                        )
+                    }
 
-                {(query) && (
-                    <div className="search-books-results">
-                        <ol className="books-grid">{
-                            showingBooks.map(book => (<Book moveBook={this.props.moveBook} key={book.id} book={book} />)
-                            )
-                        }
+                    </ol>
+                </div>
 
-                        </ol>
-                    </div>
-                )}
 
             </div>
         )
@@ -65,6 +54,5 @@ class search extends Component {
 export default search;
 
 search.propTypes = {
-    books: PropTypes.array.isRequired
-    , moveBook: PropTypes.func.isRequired
+    moveBook: PropTypes.func.isRequired
 }

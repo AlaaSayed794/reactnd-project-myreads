@@ -18,19 +18,37 @@ class BooksApp extends React.Component {
   componentDidMount() {
     this.populateData()
   }
-  moveBook = async (id, shelf) => {
+  moveBook = async (book, shelf) => {
 
     this.setState({ loading: true })
-    await BooksAPI.update(id, shelf).then(res => {
-      this.setState({
-        loading: false,
-        books: this.state.books.map(book => {
-          if (book.id === id) {
-            book.shelf = shelf
-          }
-          return book;
+    await BooksAPI.update(book, shelf).then(res => {
+      var found = false
+      for (let i = 0; i < this.state.books.length; i++) {
+        if (this.state.books[i].id === book.id) {
+          found = true
+          break
+        }
+      }
+      if (found) {
+        this.setState({
+          loading: false,
+          books: this.state.books.map(Book => {
+            if (Book.id === book.id) {
+              Book.shelf = shelf
+            }
+            return Book;
+          })
         })
-      })
+      }
+      else {
+        console.log("new book with id " + book.id)
+        book.shelf = shelf
+        this.setState({
+          loading: false,
+          books: [...this.state.books, book]
+        })
+      }
+
     })
   }
 
