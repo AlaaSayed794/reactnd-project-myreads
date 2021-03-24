@@ -11,6 +11,13 @@ class search extends Component {
     searchBooks = async (query) => {
         if (query) {
             const books = await BooksAPI.search(query)
+            let booksWithShelves = books.map(b => {
+                if (this.props.books.some(item => item.id === b.id)) {
+                    console.log("book in my shelf")
+                    b.shelf = this.props.books.find(x => x.id === b.id).shelf
+                }
+                return b
+            });
             this.setState(() => ({
                 showingBooks: books && (!books.error) ? books : []
             }))
@@ -54,5 +61,6 @@ class search extends Component {
 export default search;
 
 search.propTypes = {
+    books: PropTypes.array.isRequired,
     moveBook: PropTypes.func.isRequired
 }
