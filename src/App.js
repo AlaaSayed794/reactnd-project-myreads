@@ -41,7 +41,6 @@ class BooksApp extends React.Component {
         })
       }
       else {
-        console.log("new book with id " + book.id)
         book.shelf = shelf
         this.setState({
           loading: false,

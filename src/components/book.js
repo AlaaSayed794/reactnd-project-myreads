@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 
 export default function book(props) {
     const onChange = (e) => {
-        if (e.target.value !== "move") {
-            props.moveBook(props.book, e.target.value)
-        }
+
+        props.moveBook(props.book, e.target.value)
+
     }
     let authors = ""
     try {
@@ -13,14 +13,21 @@ export default function book(props) {
     } catch {
         authors = ""
     }
+    let url = ""
+    try {
+        url = props.book.imageLinks.thumbnail
+    }
+    catch {
+        url = ""
+    }
     return (
         <li key={props.book.id}>
             <div className="book">
                 <div className="book-top">
-                    <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${props.book.imageLinks.thumbnail})` }}></div>
+                    <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${url})` }}></div>
                     <div className="book-shelf-changer">
-                        <select onChange={onChange}>
-                            <option value="move" >Move to...</option>
+                        <select defaultValue={props.book.shelf ? props.book.shelf : "none"} onChange={onChange}>
+                            <option value="move" disabled >Move to...</option>
                             <option disabled={props.book.shelf === "currentlyReading"} value="currentlyReading">Currently Reading</option>
                             <option disabled={props.book.shelf === "wantToRead"} value="wantToRead">Want to Read</option>
                             <option disabled={props.book.shelf === "read"} value="read">Read</option>

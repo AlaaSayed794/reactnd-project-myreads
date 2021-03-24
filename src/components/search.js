@@ -11,6 +11,7 @@ class search extends Component {
     searchBooks = async (query) => {
         if (query) {
             const books = await BooksAPI.search(query)
+            console.log(books)
             this.setState(() => ({
                 showingBooks: books && (!books.error) ? books : []
             }))
